@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			h2{
+				color: yellowgreen;
+			}
+			div{
+				margin: 10px 0;
+				padding: 10px;
+				border: 1px dotted #ddd;
+			}
+			input,select{
+				padding: 8px 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<ul>
+			<h2>window.external</h2>
+			<li>
+				<h3>AddSearchProvider</h3>
+				<div>
+					<INPUT TYPE="button" VALUE="Add Search Provider" onClick='window.external.AddSearchProvider("http://www.example.com/Provider.xml");'>
+				</div>
+			</li>
+			<li>
+				<h3>IsSearchProviderInstalled</h3>
+			</li>
+		</ul>
+		<ul>
+			<h2>window.chrome</h2>
+			<li>
+				<h3>app</h3>
+			</li>
+			<li>
+				<h3>csi</h3>
+			</li>
+			<li>
+				<h3>loadTimes</h3>
+			</li>
+			<li>
+				<h3>runtime</h3>
+			</li>
+			<li>
+				<h3>webstore</h3>
+			</li>
+		</ul>
+		<ul>
+			<h2>window.document</h2>
+		</ul>
+		<ul>
+			<h2>window.speechSynthesis</h2>
+			<div>
+				<form action="" method="post">
+					<input type="text" name="voice" id="voice" value="" />
+					<select name="">
+						<option value=""></option>
+					</select>
+					<input type="submit" value="提交"/>
+				</form>
+				<script type="text/javascript">
+				(function(){
+					var synth = window.speechSynthesis;
+					var inputForm = document.querySelector('form');
+					var inputTxt = document.querySelector('#voice');
+					var voiceSelect = document.querySelector('select');
+				
+					function populateVoiceList() {
+					  var voices = synth.getVoices();
+					
+					  for(var i = 0; i < voices.length ; i++) {
+					    var option = document.createElement('option');
+					    option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
+					    
+					    if(voices[i].default) {
+					      option.textContent += ' -- DEFAULT';
+					    }
+					
+					    option.setAttribute('data-lang', voices[i].lang);
+					    option.setAttribute('data-name', voices[i].name);
+					    voiceSelect.appendChild(option);
+					  }
+					}
+					
+					populateVoiceList();
+					if (speechSynthesis.onvoiceschanged !== undefined) {
+					  speechSynthesis.onvoiceschanged = populateVoiceList;
+					}
+					
+					inputForm.onsubmit = function(event) {
+					  event.preventDefault();
+					
+					  var utterThis = new SpeechSynthesisUtterance(inputTxt.value);
+					  var selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
+					  for(i = 0; i < voices.length ; i++) {
+					    if(voices[i].name === selectedOption) {
+					      utterThis.voice = voices[i];
+					    }
+					  }
+					  synth.speak(utterThis);
+					  inputTxt.blur();
+					}
+					
+				})(window);
+				</script>
+			</div>
+		</ul>
+		<ul>
+			<h2>caches(CacheStorage)</h2>
+			
+		</ul>
+		<ul>
+			<h2>localStorage</h2>
+		</ul>
+		<ul>
+			<h2>sessionStorage</h2>
+		</ul>
+		<ul>
+			<h2>webkitStorageInfo</h2>
+			<p>'window.webkitStorageInfo' is deprecated. Please use 'navigator.webkitTemporaryStorage' or 'navigator.webkitPersistentStorage' instead.</p>
+		</ul>
+		<ul>
+			<h2>indexedDB 索引数据库</h2>
+			<div>
+				<a href="http://www.ibm.com/developerworks/cn/web/wa-indexeddb/">参考资料</a>
+			</div>
+		</ul>
+		<ul>
+			<h2>crypto</h2>
+		</ul>
+		<ul>
+			<h2>applicationCache 离线缓存技术</h2>
+			<div>
+				<a href="http://www.jb51.net/html5/67850.html">参考资料</a>
+			</div>
+		</ul>
+		<ul>
+			<h2>performance 测量当前网页页面或者 web应用的性能</h2>
+		</ul>
+		<ul>
+			<h2>styleMedia</h2>
+		</ul>
+		<ul>
+			<h2>属性值</h2>
+			<li>
+				<h3>screenTop</h3>
+			</li>
+			<li>
+				<h3>screenLeft</h3>
+			</li>
+			<li>
+				<h3>outerHeight</h3>
+			</li>
+			<li>
+				<h3>outerWidth</h3>
+			</li>
+			<li>
+				<h3>screenX</h3>
+			</li>
+			<li>
+				<h3>screenY</h3>
+			</li>
+			<li>
+				<h3>pageYOffset</h3>
+			</li>
+			<li>
+				<h3>pageXOffset</h3>
+			</li>
+			<li>
+				<h3>scrollY</h3>
+			</li>
+			<li>
+				<h3>scrollX</h3>
+			</li>
+			<li>
+				<h3>innerHeight</h3>
+			</li>
+			<li>
+				<h3>innerWidth</h3>
+			</li>
+		</ul>
+		<ul>
+			<h2>screen 用户屏幕的信息</h2>
+		</ul>
+		<ul>
+			<h2>window.navigator 对象包含有关访问者浏览器的信息</h2>
+		</ul>
+		<script type="text/javascript">
+		(function(){
+			for (var sProp in window) {
+				var p = document.createElement("p");
+					p.innerText = sProp;
+					p.style.color = "#666";
+				document.body.appendChild(p);
+			}
+		})(window);
+		</script>
+	</body>
+</html>
