@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <video src=""></video>
+    <canvas id="myCanvas"></canvas>
+    <script>
+        var constraints = {
+            audio: true,
+            video: {
+                width: 600,
+                height: 400
+            }
+        };
+        var video;
+        navigator.mediaDevices.getUserMedia(constraints)
+            .then(function(mediaStream){
+                video = document.querySelector('video');
+                video.srcObject = mediaStream;
+                video.onloadedmetadata = function (e) {
+                    video.play();
+                }
+            })
+            .catch(function (err) {
+                console.log(err.name + ":" + err.message);
+            });
+        var canvas = document.getElementById('myCanvas');
+        var gl = canvas.getContext('webgl');
+        gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video
+);
+        gl.useProgram(skinToneProgram);
+        gl.drawArray(gl.TRIANGLES, 0, 6);
+    </script>
+</body>
+</html>
